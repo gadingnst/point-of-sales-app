@@ -1,17 +1,18 @@
 import React from 'react'
-import { SafeAreaView, View, Text } from 'react-native'
-import { API_BASEURL } from 'react-native-dotenv'
+import { SafeAreaView } from 'react-native'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import redux from  './Redux'
+import Main from './Main'
 
-const App = () => {
-    return (
-        <>
+const { store, persistor } = redux()
+
+export default () => (
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
             <SafeAreaView>
-                <View>
-                    <Text>Hello World {API_BASEURL}</Text>
-                </View>
+                <Main />
             </SafeAreaView>
-        </>
-    )
-}
-
-export default App
+        </PersistGate>
+    </Provider>
+)
