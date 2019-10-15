@@ -1,4 +1,4 @@
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { zoomIn, fromRight } from 'react-navigation-transitions'
 import Home from './Screens/Home'
@@ -38,7 +38,7 @@ const GuestNavigation = { ...Navigation }
 const AuthNavigator = createStackNavigator(AuthNavigation, { ...opts, initialRouteName: 'Home' })
 const GuestNavigator = createStackNavigator(GuestNavigation, { ...opts, initialRouteName: 'Login' })
 
-export default () => ({
-    AuthNavigator: createAppContainer(AuthNavigator),
-    GuestNavigator: createAppContainer(GuestNavigator)
-})
+export default ({ initialRouteName }) => createAppContainer(createSwitchNavigator(
+    { AuthNavigator, GuestNavigator },
+    { initialRouteName }
+))

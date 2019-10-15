@@ -14,24 +14,6 @@ export default ({ navigation }) => {
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
 
-    const handleEmailChange = val => {
-        val = val.trim()
-        setEmail(val)
-        const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-        if (pattern.test(val))
-            setValidEmail(true)
-        else
-            setValidEmail(false)
-    }
-
-    const handlePassChange = pass => {
-        setPassword(pass)
-        if (pass.length > 5)
-            setValidPass(true)
-        else
-            setValidPass(false)
-    }
-
     const handleLogin = (email, password) => {
         dispatch(login({ email, password }))
             .then(({ value: { data } }) => {
@@ -50,6 +32,24 @@ export default ({ navigation }) => {
                     type: 'danger'
                 })
             })
+    }
+    
+    const handleEmailChange = val => {
+        val = val.trim()
+        setEmail(val)
+        const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        if (pattern.test(val))
+            setValidEmail(true)
+        else
+            setValidEmail(false)
+    }
+
+    const handlePassChange = pass => {
+        setPassword(pass)
+        if (pass.length > 5)
+            setValidPass(true)
+        else
+            setValidPass(false)
     }
 
     return (
