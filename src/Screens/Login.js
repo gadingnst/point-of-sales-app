@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { StyleSheet, ScrollView  } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import { View, Text, Form, Input, Label, Item, Button, Card, Spinner, Toast } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
 import { login } from '../Redux/Actions/Auth'
