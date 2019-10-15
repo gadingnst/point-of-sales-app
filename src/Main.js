@@ -1,11 +1,11 @@
 import React from 'react'
-import { Container } from 'native-base'
+import { Root, Container } from 'native-base'
 import Navigator from './Navigator'
 
 export default () => (
-    <>
+    <Root>
         <Container>
             <Navigator />
         </Container>
-    </>
+    </Root>
 )

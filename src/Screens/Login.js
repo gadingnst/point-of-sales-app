@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet, ScrollView  } from 'react-native'
-import { View, Text, Form, Input, Label, Item, Button, Card } from 'native-base'
+import { View, Text, Form, Input, Label, Item, Button, Card, Spinner, Toast } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
+import { login } from '../Redux/Actions/Auth'
+import Http from '../Utils/Http'
 
 const styles = StyleSheet.create({
     content: {
@@ -14,7 +17,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 20,
         marginTop: 30,
-        opacity: 0.875
+        opacity: 0.875,
+        elevation: 4
     },
     inputValidateText: {
         fontSize: 11,
@@ -37,8 +41,11 @@ export default () => {
     const [password, setPassword] = useState('')
     const [validEmail, setValidEmail] = useState(true)
     const [validPass, setValidPass] = useState(true)
+    const dispatch = useDispatch()
+    const auth = useSelector(state => state.auth)
 
     const handleEmailChange = val => {
+        val = val.trim()
         setEmail(val)
         const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         if (pattern.test(val))
@@ -48,12 +55,30 @@ export default () => {
     }
 
     const handlePassChange = pass => {
-        pass = pass.trim()
         setPassword(pass)
         if (pass.length > 5)
             setValidPass(true)
         else
             setValidPass(false)
+    }
+
+    const handleLogin = (email, password) => {
+        dispatch(login({ email, password }))
+            .then(({ value: { data } }) => {
+                Http.defaults.headers.common['authorization'] = `Bearer ${data.token}`
+                Toast.show({
+                    text: 'Success Logged In!',
+                    type: 'success'
+                })
+            })
+            .catch(err => {
+                Toast.show({
+                    text: err.message === 'Network Error'
+                        ? `Network Error: Your connection can't be established.`
+                        : `Can't login, ${err.response.data.message}`,
+                    type: 'danger'
+                })
+            })
     }
 
     return (
@@ -86,8 +111,8 @@ export default () => {
                                 <Input value={password} onChangeText={value => handlePassChange(value)} secureTextEntry />
                             </Item>
                             { validPass || <Text style={styles.inputValidateText}>Password must not below 6 character length!</Text> }
-                            <Button block style={{ borderRadius: 15, marginTop: 20 }}>
-                                <Text>Login</Text>
+                            <Button block onPress={() => handleLogin(email, password)} disabled={auth.isLoading || (!validEmail || !validPass)} style={{ borderRadius: 15, marginTop: 20 }}>
+                                { auth.isLoading ? <Spinner color="#fb6340" /> : <Text>Login</Text> }
                             </Button>
                         </Form>
                     </Card>

@@ -1,16 +1,20 @@
 import axios from 'axios'
 import { AsyncStorage } from 'react-native'
+import { API_BASEURL } from 'react-native-dotenv'
 
-let auth, token
+axios.defaults.baseURL = API_BASEURL
 
-try {
-    auth = JSON.parse(AsyncStorage.getItem('persist:root')).auth
-    token = JSON.parse(auth).token
-} catch (err) {
-    token = null
+let getToken = async () => {
+    try {
+        const rootPersist = await AsyncStorage.getItem('persist:root')
+        const authState = JSON.parse(rootPersist).auth
+        const token = JSON.parse(authState).token
+        axios.defaults.headers.common['authorization'] = `Bearer ${token}`        
+    } catch (err) {
+        console.error(err)
+    }
 }
 
-axios.defaults.baseURL = process.env.API_BASEURL || 'http://localhost:9600'
-axios.defaults.headers.common['authorization'] = `Bearer ${token}`
+getToken()
 
 export default axios

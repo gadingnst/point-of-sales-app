@@ -5,7 +5,7 @@ export const login = data => ({
     payload: new Promise((resolve, reject) => {
         Http.post('/auth/login', data)
             .then(({ data: result }) => resolve(result))
-            .catch(({ response }) => reject(response))
+            .catch(err => reject(err))
     })
 })
 
