@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Root, Container } from 'native-base'
 import Navigator from './Navigator'
+import Footer from './Components/Base/Footer'
 
 let StartNavigator = null
 
@@ -16,6 +17,7 @@ export default () => {
             <Container>
                 <StartNavigator />
             </Container>
+            <Footer />
         </Root>
     )
 }

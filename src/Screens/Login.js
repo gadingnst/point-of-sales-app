@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet, ScrollView } from 'react-native'
 import { View, Text, Form, Input, Label, Item, Button, Card, Spinner, Toast } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
+import Colors from '../Assets/Colors'
 import { login } from '../Redux/Actions/Auth'
 import Http from '../Utils/Http'
 
@@ -25,6 +26,7 @@ export default ({ navigation }) => {
                 navigation.replace('Home')
             })
             .catch(err => {
+                setPassword('')
                 Toast.show({
                     text: err.message === 'Network Error'
                         ? `Network Error: Your connection can't be established.`
@@ -82,7 +84,7 @@ export default ({ navigation }) => {
                                 <Input value={password} onChangeText={value => handlePassChange(value)} secureTextEntry />
                             </Item>
                             { validPass || <Text style={styles.inputValidateText}>Password must not below 6 character length!</Text> }
-                            <Button block onPress={() => handleLogin(email, password)} disabled={auth.isLoading || (!validEmail || !validPass)} style={{ borderRadius: 15, marginTop: 20 }}>
+                            <Button block onPress={() => handleLogin(email, password)} disabled={auth.isLoading || (!validEmail || !validPass)} style={{ borderRadius: 15, marginTop: 20, backgroundColor: Colors.Primary }}>
                                 { auth.isLoading ? <Spinner color="#fb6340" /> : <Text style={{ fontWeight: 'bold' }}>Login</Text> }
                             </Button>
                         </Form>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 20,
         marginTop: 30,
-        opacity: 0.875,
+        backgroundColor: 'rgba(255, 255, 255, .8)',
         elevation: 4
     },
     inputValidateText: {
