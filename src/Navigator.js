@@ -14,7 +14,7 @@ const Navigation = {
 
 const opts = {
     headerMode: 'none',
-    initialRouteName: 'Home'
+    initialRouteName: 'Login'
 }
 
 export default createAppContainer(createStackNavigator(Navigation, opts))
