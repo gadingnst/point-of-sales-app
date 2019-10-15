@@ -6,37 +6,7 @@ import Gradient from 'react-native-linear-gradient'
 import { login } from '../Redux/Actions/Auth'
 import Http from '../Utils/Http'
 
-const styles = StyleSheet.create({
-    content: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    formContainer: {
-        borderRadius: 15,
-        padding: 20,
-        marginTop: 30,
-        opacity: 0.875,
-        elevation: 4
-    },
-    inputValidateText: {
-        fontSize: 11,
-        color: 'crimson',
-        textAlign: 'center'
-    },
-    welcomeText: {
-        fontWeight: 'bold',
-        color: '#FFF',
-        textShadowColor: 'rgba(0, 0, 0, 0.5)',
-        textShadowOffset: { width: -1, height: 2 },
-        textShadowRadius: 20,
-        textAlign: 'center',
-        fontSize: 22
-    }
-})
-
-export default () => {
+export default ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [validEmail, setValidEmail] = useState(true)
@@ -70,6 +40,7 @@ export default () => {
                     text: 'Success Logged In!',
                     type: 'success'
                 })
+                navigation.replace('Home')
             })
             .catch(err => {
                 Toast.show({
@@ -112,7 +83,7 @@ export default () => {
                             </Item>
                             { validPass || <Text style={styles.inputValidateText}>Password must not below 6 character length!</Text> }
                             <Button block onPress={() => handleLogin(email, password)} disabled={auth.isLoading || (!validEmail || !validPass)} style={{ borderRadius: 15, marginTop: 20 }}>
-                                { auth.isLoading ? <Spinner color="#fb6340" /> : <Text>Login</Text> }
+                                { auth.isLoading ? <Spinner color="#fb6340" /> : <Text style={{ fontWeight: 'bold' }}>Login</Text> }
                             </Button>
                         </Form>
                     </Card>
@@ -121,3 +92,33 @@ export default () => {
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    content: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    formContainer: {
+        borderRadius: 15,
+        padding: 20,
+        marginTop: 30,
+        opacity: 0.875,
+        elevation: 4
+    },
+    inputValidateText: {
+        fontSize: 11,
+        color: 'crimson',
+        textAlign: 'center'
+    },
+    welcomeText: {
+        fontWeight: 'bold',
+        color: '#FFF',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: -1, height: 2 },
+        textShadowRadius: 20,
+        textAlign: 'center',
+        fontSize: 22
+    }
+})
