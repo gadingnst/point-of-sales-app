@@ -1,11 +1,13 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View, Text } from 'native-base'
 
 export default props => (
-    <View style={styles.card}>
-        <Text>{props.name}</Text>
-    </View>
+    <TouchableOpacity onPress={event => props.onPress ? props.onPress(event, props.id) : false}>
+        <View style={styles.card}>
+            <Text>{props.name}</Text>
+        </View>
+    </TouchableOpacity>
 )
 
 const styles = StyleSheet.create({

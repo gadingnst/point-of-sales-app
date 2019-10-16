@@ -1,27 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import { Grid, Row } from 'react-native-easy-grid'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
-import { logout } from '../Redux/Actions/Auth'
+import { setProduct } from '../Redux/Actions/Product'
 import Header from '../Components/Base/Header'
 import ProductItem from '../Components/Product/ProductItem'
 import Http from '../Utils/Http'
 
 export default ({ navigation }) => {
     const dispatch = useDispatch()
-
-    const onLogout = () => {
-        dispatch(logout())
-        navigation.replace('Login')
-    }
+    const products = useSelector(state => state.product.data)
+    const [category, setCategory] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         // todo
-        Http.get('/api/product')
-        return () => {
-            
-        }
+        Promise.all([
+            Http.get('/api/category')
+                .then(({ data: { data } }) => data),
+            Http.get('/api/product')
+                .then(({ data: { data } }) => data.rows)
+        ]).then(([category, products]) => {
+            setLoading(false)
+            setCategory(category)
+            dispatch(setProduct(products))
+        })
     }, [])
 
 
@@ -36,25 +40,15 @@ export default ({ navigation }) => {
                     <Header title="Home" />
                 )}
                 renderForeground={() => (
-                    <Header banner title="Home" />
+                    <Header homeBanner loading={loading} category={category} title="Home" />
                 )}
             >
                 <Grid style={styles.rowWrapper}>
-                    <Row style={styles.row}>
-                        <ProductItem />
+                {products.map(item => (
+                    <Row key={item.id} style={styles.row}>
+                        <ProductItem data={item} />
                     </Row>
-                    <Row style={styles.row}>
-                        <ProductItem />
-                    </Row>
-                    <Row style={styles.row}>
-                        <ProductItem />
-                    </Row>
-                    <Row style={styles.row}>
-                        <ProductItem />
-                    </Row>
-                    <Row style={styles.row}>
-                        <ProductItem />
-                    </Row>
+                ))}
                 </Grid>
             </ParallaxScrollView>
             

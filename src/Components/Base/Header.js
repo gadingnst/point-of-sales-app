@@ -1,12 +1,13 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Header, View, Item, Left, Body, Right, Button, Icon, Title, Text, Input } from 'native-base'
+import { Header, View, Item, Body, Right, Button, Icon, Title, Text, Input } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
 import CategoryCard from '../Category/CardCategory'
 
 export default props => {
-    if (props.banner) {
+    const category = props.category || []
+    if (props.homeBanner) {
         return (
             <>
                 <Gradient
@@ -19,14 +20,15 @@ export default props => {
                     <View style={styles.formSearchWrapper}>
                         <Text style={styles.title}>{props.title}</Text>
                         <Item rounded style={styles.search}>
-                            <Input placeholder='Search Product...'/>
+                            <Input onFocus={props.onSearchbarFocus} placeholder='Search Product...'/>
                             <Icon name='search' />
                         </Item>
                     </View>
                     <View style={styles.categoryWrapper}>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingVertical: 20, backgroundColor: 'rgba(255, 255, 255, .15)' }}>
-                            <CategoryCard name="Category 1" />
-                            <CategoryCard name="Category 1" />
+                        {category.map(item => (
+                            <CategoryCard key={item.id} id={item.id} name={item.name} onPress={(event, id) => props.onPress ? props.onPress(event, id) : false} />
+                        ))}
                         </ScrollView>
                     </View>
                 </Gradient>

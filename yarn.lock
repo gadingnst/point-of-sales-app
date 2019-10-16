@@ -5413,6 +5413,11 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   dependencies:
     debounce "^1.2.0"
 
+react-native-skeleton-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-skeleton-loader/-/react-native-skeleton-loader-1.0.3.tgz#93fa1da5bc1cd73b862616695f44d383aeb0958a"
+  integrity sha512-rBLkfLkWDfKfJ5TPfX1wed5iaOsMYtv9zopjtxM8y11nq2J/KZfNKzcXNaSc42ncsjZD9HCqlEXTxYPiAD3IGQ==
+
 react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
