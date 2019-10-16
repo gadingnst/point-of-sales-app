@@ -1,11 +1,12 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import { Grid, Row } from 'react-native-easy-grid'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { logout } from '../Redux/Actions/Auth'
 import Header from '../Components/Base/Header'
 import ProductItem from '../Components/Product/ProductItem'
+import Http from '../Utils/Http'
 
 export default ({ navigation }) => {
     const dispatch = useDispatch()
@@ -15,18 +16,27 @@ export default ({ navigation }) => {
         navigation.replace('Login')
     }
 
+    useEffect(() => {
+        // todo
+        Http.get('/api/product')
+        return () => {
+            
+        }
+    }, [])
+
+
     return (
         <>
             <ParallaxScrollView
-                backgroundColor="blue"
-                parallaxHeaderHeight={300}
+                backgroundColor="#f27e7c"
+                parallaxHeaderHeight={400}
                 backgroundScrollSpeed={2}
                 stickyHeaderHeight={80}
                 renderStickyHeader={() => (
-                    <Header title="Title" />
+                    <Header title="Home" />
                 )}
                 renderForeground={() => (
-                    <Header title="Home" />
+                    <Header banner title="Home" />
                 )}
             >
                 <Grid style={styles.rowWrapper}>
@@ -47,6 +57,7 @@ export default ({ navigation }) => {
                     </Row>
                 </Grid>
             </ParallaxScrollView>
+            
         </>
     )
 }
