@@ -12,7 +12,7 @@ export default props => {
             <>
                 <Gradient
                     style={{ height: '100%' }}
-                    colors={['#f27e7c', '#b07df0']}
+                    colors={!props.gradientReverse ? ['#f27e7c', '#b07df0'] : ['#b07df0', '#f27e7c']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     locations={[0.1, 0.9]}
@@ -37,7 +37,7 @@ export default props => {
     }
     return (
         <Gradient
-            colors={['#f27e7c', '#b07df0']}
+            colors={!props.gradientReverse ? ['#f27e7c', '#b07df0'] : ['#b07df0', '#f27e7c']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             locations={[0.1, 0.9]}

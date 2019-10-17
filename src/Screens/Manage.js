@@ -6,7 +6,7 @@ import Header from '../Components/Base/Header'
 export default () => {
     return (
         <>
-            <Header title="Manage" />
+            <Header title="Manage" gradientReverse />
             <Grid style={{ padding: 50 }}>
                 <Row>
                     <Col>

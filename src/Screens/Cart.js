@@ -18,6 +18,7 @@ export default ({ navigation }) => {
         <>
             <Header
                 title="Cart"
+                gradientReverse
                 rightComponent={(
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
