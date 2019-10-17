@@ -2,7 +2,7 @@ import axios from 'axios'
 import { AsyncStorage } from 'react-native'
 import { API_BASEURL } from 'react-native-dotenv'
 
-axios.defaults.baseURL = API_BASEURL
+axios.defaults.baseURL = 'http://localhost:9600'
 
 let getToken = async () => {
     try {

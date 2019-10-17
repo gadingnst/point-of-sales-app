@@ -58,6 +58,7 @@ export default ({ navigation }) => {
                 {products.map(item => (
                     <Row key={item.id} style={styles.row}>
                         <ProductItem
+                            key={item.id}
                             data={item}
                             onView={data => navigation.navigate('DetailProduct', { product: data })}
                         />
