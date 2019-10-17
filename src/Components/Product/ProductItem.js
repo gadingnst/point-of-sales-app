@@ -14,7 +14,7 @@ export default ({ data, onAddToCart, onView }) => (
                     <Thumbnail square style={{ borderRadius: 5 }} source={{ uri: `${API_BASEURL}/files/image/product/${data.image}` }} />
                     <Body>
                         <Text>{data.name}</Text>
-                        <Text note>{data.Category.name}</Text>
+                        <Text note>{data.Category ? data.Category.name : ''}</Text>
                     </Body>
                 </Left>
             </CardItem>

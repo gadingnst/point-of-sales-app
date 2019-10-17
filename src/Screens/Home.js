@@ -15,7 +15,7 @@ export default ({ navigation }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        // todo
+        console.log(Http.defaults.baseURL)
         Promise.all([
             Http.get('/api/category')
                 .then(({ data: { data } }) => data),

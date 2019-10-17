@@ -16,6 +16,7 @@ export default ({ navigation }) => {
     const auth = useSelector(state => state.auth)
 
     const handleLogin = (email, password) => {
+        console.log(Http.defaults.baseURL)
         dispatch(login({ email, password }))
             .then(({ value: { data } }) => {
                 Http.defaults.headers.common['authorization'] = `Bearer ${data.token}`

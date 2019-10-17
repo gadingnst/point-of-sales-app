@@ -10,7 +10,7 @@ export default () => {
             <Grid style={{ padding: 50 }}>
                 <Row>
                     <Col>
-                        <Text>Hello from History</Text>
+                        <Text>Hello from Cart</Text>
                     </Col>
                 </Row>
             </Grid>

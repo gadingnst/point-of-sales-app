@@ -7,11 +7,11 @@ axios.defaults.baseURL = API_BASEURL
 let getToken = async () => {
     try {
         const rootPersist = await AsyncStorage.getItem('persist:root')
-        const authState = JSON.parse(rootPersist).auth
+        const authState = JSON.parse(rootPersist) ? JSON.parse(rootPersist).auth : '{}' 
         const token = JSON.parse(authState).token
         axios.defaults.headers.common['authorization'] = `Bearer ${token}`        
     } catch (err) {
-        console.error(err)
+        console.warn(err)
     }
 }
 
