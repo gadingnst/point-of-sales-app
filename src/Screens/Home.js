@@ -46,7 +46,10 @@ export default ({ navigation }) => {
                 <Grid style={styles.rowWrapper}>
                 {products.map(item => (
                     <Row key={item.id} style={styles.row}>
-                        <ProductItem data={item} />
+                        <ProductItem
+                            data={item}
+
+                        />
                     </Row>
                 ))}
                 </Grid>
