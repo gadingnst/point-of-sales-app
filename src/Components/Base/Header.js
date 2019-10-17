@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Header, View, Item, Body, Right, Button, Icon, Title, Text, Input } from 'native-base'
+import { Header, View, Item, Body, Right, Icon, Title, Text, Input, Left } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
 import { ScrollView } from 'react-native-gesture-handler'
 import CategoryCard from '../Category/CardCategory'
@@ -43,13 +43,14 @@ export default props => {
             locations={[0.1, 0.9]}
         >
             <Header transparent>
+                <Left style={{ flex: 1 }}>
+                    { props.leftComponent || false }
+                </Left>
                 <Body style={{ flex: 1, alignItems: 'center' }}>
                     <Title>{props.title}</Title>
                 </Body>
                 <Right style={{ flex: 1 }}>
-                    <Button transparent>
-                        <Icon type="FontAwesome" name="search" />
-                    </Button>
+                    { props.rightComponent || false }
                 </Right>
             </Header>
         </Gradient>

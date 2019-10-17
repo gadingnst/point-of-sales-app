@@ -32,7 +32,14 @@ const opts = {
 
 const AuthNavigation = {
     Home: {
-        screen: Home
+        screen: createStackNavigator({
+            Home,
+            DetailProduct,
+            Search
+        }, {
+            initialRouteName: 'Home',
+            headerMode: 'none'
+        }),
     },
     Manage: {
         screen: Manage
@@ -44,11 +51,14 @@ const AuthNavigation = {
         screen: Cart
     },
     Account: {
-        screen: Account
-    },
-    DetailProduct,
-    Search,
-    Login
+        screen: createStackNavigator({
+            Account,
+            Login
+        }, {
+            headerMode: 'none',
+            initialRouteName: 'Account'
+        })
+    }
 }
 
 const GuestNavigation = { Home, Login }

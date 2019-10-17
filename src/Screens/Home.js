@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import { Grid, Row } from 'react-native-easy-grid'
+import { Button, Icon } from 'native-base'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { setProduct } from '../Redux/Actions/Product'
 import Header from '../Components/Base/Header'
@@ -15,7 +16,6 @@ export default ({ navigation }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        console.log(Http.defaults.baseURL)
         Promise.all([
             Http.get('/api/category')
                 .then(({ data: { data } }) => data),
@@ -24,7 +24,11 @@ export default ({ navigation }) => {
         ]).then(([category, products]) => {
             setLoading(false)
             setCategory(category)
-            dispatch(setProduct(products))
+            dispatch(setProduct(products.map(data => ({
+                ...data,
+                qty: 1,
+                totalPrice: data.price
+            }))))
         })
     }, [])
 
@@ -37,7 +41,14 @@ export default ({ navigation }) => {
                 backgroundScrollSpeed={2}
                 stickyHeaderHeight={80}
                 renderStickyHeader={() => (
-                    <Header title="Home" />
+                    <Header
+                        title="Home"
+                        rightComponent={(
+                            <Button transparent>
+                                <Icon type="FontAwesome" name="search" />
+                            </Button>
+                        )}
+                    />
                 )}
                 renderForeground={() => (
                     <Header homeBanner loading={loading} category={category} title="Home" />
@@ -48,7 +59,7 @@ export default ({ navigation }) => {
                     <Row key={item.id} style={styles.row}>
                         <ProductItem
                             data={item}
-
+                            onView={data => navigation.navigate('DetailProduct', { product: data })}
                         />
                     </Row>
                 ))}

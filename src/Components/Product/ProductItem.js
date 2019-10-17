@@ -49,10 +49,10 @@ export default ({ data, onView }) => {
                         </Button>
                     </Left>
                     <Right style={styles.actionWrapper}>
-                        <Button onPress={() => handleCartPress(data)} style={{ ...styles.btnAction, backgroundColor: '#f27e7c' }}>
-                            <Icon name={isExistsOnCart(data) ? 'warning' : 'cart'} />
+                        <Button onPress={() => handleCartPress(data)} style={{ ...styles.btnAction, backgroundColor: isExistsOnCart(data) ? Color.Warning : Color.Primary }}>
+                            <Icon type="MaterialIcons" name={isExistsOnCart(data) ? 'remove-shopping-cart' : 'shopping-cart'} />
                         </Button>
-                        <Button onPress={() => false} style={styles.btnAction}>
+                        <Button onPress={() => onView ? onView(data) : false} style={styles.btnAction}>
                             <Icon name="eye" />
                         </Button>
                     </Right>
