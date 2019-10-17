@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import { View, Footer, Icon, Content, List, ListItem, Left, Thumbnail, Body, Right, Text, Button } from 'native-base'
@@ -7,10 +7,12 @@ import Header from '../Components/Base/Header'
 import { increaseCartQty, decreaseCartQty, removeCart, clearCart } from '../Redux/Actions/Cart'
 import { rupiah } from '../Utils/Helpers'
 import Colors from '../Assets/Colors'
+import SimpleModal from '../Components/Base/SimpleModal'
 
 export default ({ navigation }) => {
     const dispatch = useDispatch()
     const carts = useSelector(({ cart }) => cart.data)
+    const [modal, showModal] = useState(false)
 
     return (
         <>
@@ -23,6 +25,13 @@ export default ({ navigation }) => {
                 )}
             />
             <Content>
+                {
+                    !carts.length ||
+                    <Button block danger iconLeft onPress={() => dispatch(clearCart())}>
+                        <Icon type="FontAwesome" name="trash" />
+                        <Text>Clear Cart</Text>
+                    </Button>
+                }
                 <List>
                     {carts.map((item, idx) => (
                         <ListItem avatar key={item.id} style={{ flex: 1 }}>
@@ -51,7 +60,7 @@ export default ({ navigation }) => {
                     ))}
                 </List>
             </Content>
-            <TouchableOpacity onPress={() => false}>
+            <TouchableOpacity onPress={() => !carts.length || showModal(true)}>
                 <Footer style={styles.checkoutContainer}>
                     {carts.length > 0
                         ? <View style={styles.checkout}>
@@ -66,6 +75,23 @@ export default ({ navigation }) => {
                     }
                 </Footer>
             </TouchableOpacity>
+            <SimpleModal
+                text="Are you sure want to checkout ?"
+                isVisible={modal}
+                animationIn="zoomIn"
+                animationInTiming={500}
+                animationOut="zoomOut"
+                actions={(
+                    <>
+                        <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
+                            <Text>Cancel</Text>
+                        </Button>
+                        <Button primary style={{ ...styles.btnModalAction }} onPress={() => checkout(carts)}>
+                            <Text>Checkout</Text>
+                        </Button>
+                    </>
+                )}
+            />
         </>
     )
 }
@@ -94,5 +120,9 @@ const styles = StyleSheet.create({
     fontBold: {
         fontWeight: 'bold',
         color: '#fff'
+    },
+    btnModalAction: {
+        borderRadius: 8,
+        marginHorizontal: 5
     }
 })

@@ -13,6 +13,7 @@ import History from './Screens/History'
 import Manage from './Screens/Manage'
 import Login from './Screens/Login'
 import DetailProduct from './Screens/DetailProduct'
+import Checkout from './Screens/Checkout'
 
 const handleTransition = nav => {
     const prevScene = nav.scenes[nav.scenes.length - 2]
@@ -48,7 +49,13 @@ const AuthNavigation = {
         screen: History
     },
     Cart: {
-        screen: Cart
+        screen: createStackNavigator({
+            Cart,
+            Checkout
+        }, {
+            headerMode: 'none',
+            initialRouteName: 'Cart'
+        })
     },
     Account: {
         screen: createStackNavigator({
