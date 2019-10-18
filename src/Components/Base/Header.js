@@ -20,8 +20,8 @@ export default props => {
                     <View style={styles.formSearchWrapper}>
                         <Text style={styles.title}>{props.title}</Text>
                         <Item rounded style={styles.search}>
-                            <Input onFocus={props.onSearchbarFocus} placeholder='Search Product...'/>
-                            <Icon name='search' />
+                            <Input onFocus={props.onSearchbarFocus} placeholder="Search Product..." />
+                            <Icon name="search" />
                         </Item>
                     </View>
                     <View style={styles.categoryWrapper}>

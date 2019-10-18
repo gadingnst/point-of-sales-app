@@ -32,7 +32,6 @@ export default ({ navigation }) => {
         })
     }, [])
 
-
     return (
         <>
             <ParallaxScrollView
@@ -44,7 +43,7 @@ export default ({ navigation }) => {
                     <Header
                         title="Home"
                         rightComponent={(
-                            <Button transparent onPress={() => navigation.navigate('Search')}>
+                            <Button transparent onPress={() => navigation.navigate('Search', { category })}>
                                 <Icon type="FontAwesome" name="search" />
                             </Button>
                         )}
@@ -56,7 +55,7 @@ export default ({ navigation }) => {
                         title="Home"
                         loading={loading}
                         category={category}
-                        onSearchbarFocus={() => navigation.navigate('Search')}
+                        onSearchbarFocus={() => navigation.navigate('Search', { category })}
                     />
                 )}
             >
