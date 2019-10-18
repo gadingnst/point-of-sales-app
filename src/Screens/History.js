@@ -73,17 +73,15 @@ export default ({ navigation }) => {
                                 }}
                             />
                         </Row>
-                        <Row>
-                            <List>
-                                {list.rows.map(hist => (
-                                    <HistoryList
-                                        key={hist.id}
-                                        data={hist}
-                                        onView={data => navigation.navigate('DetailOrder', { data })}
-                                    />
-                                ))}
-                            </List>
-                        </Row>
+                        <List>
+                            {list.rows.map(hist => (
+                                <HistoryList
+                                    key={hist.id}
+                                    data={hist}
+                                    onView={data => navigation.navigate('DetailOrder', { data })}
+                                />
+                            ))}
+                        </List>
                     </Grid>
                 </SafeAreaView>
             </Content>

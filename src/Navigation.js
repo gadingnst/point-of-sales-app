@@ -4,7 +4,6 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { zoomIn, fromRight } from 'react-navigation-transitions'
 import Footer from './Components/Base/Footer'
-
 import Home from './Screens/Home'
 import Account from './Screens/Account'
 import Cart from './Screens/Cart'
@@ -14,6 +13,12 @@ import Manage from './Screens/Manage'
 import Login from './Screens/Login'
 import DetailProduct from './Screens/DetailProduct'
 import Checkout from './Screens/Checkout'
+import ManageProduct from './Screens/ManageProduct'
+import ManageCategory from './Screens/ManageCategory'
+import ManageUser from './Screens/ManageUser'
+import FormProduct from './Screens/FormProduct'
+import FormCategory from './Screens/FormCategory'
+import FormUser from './Screens/FormUser'
 
 const handleTransition = nav => {
     const prevScene = nav.scenes[nav.scenes.length - 2]
@@ -43,7 +48,40 @@ const AuthNavigation = {
         }),
     },
     Manage: {
-        screen: Manage
+        screen: createStackNavigator({
+            Manage,
+            ManageCategory: {
+                screen: createStackNavigator({
+                    ManageCategory,
+                    FormCategory
+                }, {
+                    initialRouteName: 'ManageCategory',
+                    headerMode: 'none'
+                })
+            },
+            ManageUser: {
+                screen: createStackNavigator({
+                    ManageUser,
+                    FormUser
+                }, {
+                    initialRouteName: 'ManageUser',
+                    headerMode: 'none'
+                })
+            },
+            ManageProduct: {
+                screen: createStackNavigator({
+                    ManageProduct,
+                    FormProduct
+                }, {
+                    initialRouteName: 'ManageProduct',
+                    headerMode: 'none'
+                })
+            }
+        }, {
+            initialRouteName: 'Manage',
+            headerMode: 'none',
+            transitionConfig: () => fromRight()
+        })
     },
     History: {
         screen: History
