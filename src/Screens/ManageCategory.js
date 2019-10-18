@@ -9,7 +9,7 @@ export default ({ navigation }) => {
             <Header
                 title="Manage Category"
                 rightComponent={(
-                    <Button transparent onPress={() => navigation.goBack()}>
+                    <Button transparent onPress={() => navigation.navigate('Manage')}>
                         <Text>Back</Text>
                     </Button>
                 )}
