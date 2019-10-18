@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, AsyncStorage } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { Text, View, Button } from 'native-base'
 import { logout } from '../Redux/Actions/Auth'
@@ -14,7 +14,8 @@ export default ({ navigation }) => {
     const onLogout = () => {
         dispatch(logout())
         showModal(false)
-        navigation.navigate('Login')
+        AsyncStorage.clear()
+        navigation.replace('Login')
     }
 
     return (

@@ -3,18 +3,15 @@ import { useSelector } from 'react-redux'
 import { Root, Container } from 'native-base'
 import Navigation from './Navigation'
 
-let StartNavigator = null
-
 export default () => {
     const isLoggedIn = useSelector(state => state.auth.loggedIn)
-    
-    if (!StartNavigator)
-        StartNavigator = Navigation({ initialRouteName: isLoggedIn ? 'AuthNavigator' : 'GuestNavigator' })
+
+    const Navigator = Navigation({ initialRouteName: isLoggedIn ? 'auth' : 'guest' })
 
     return (
         <Root>
             <Container>
-                <StartNavigator />
+                <Navigator />
             </Container>
         </Root>
     )

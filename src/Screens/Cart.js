@@ -42,6 +42,10 @@ export default ({ navigation }) => {
                         dispatch(setProduct(newState))
                     }
                 })
+                setLoading(false)
+                showModal(false)
+                dispatch(clearCart())
+                navigation.navigate('Home')
                 Toast.show({
                     type: 'success',
                     text: 'Success checkout!',
@@ -49,17 +53,13 @@ export default ({ navigation }) => {
                 })
             })
             .catch(({ response }) => {
+                setLoading(false)
+                showModal(false)
                 Toast.show({
                     type: 'danger',
                     text: response.data.message,
                     position: 'top'
                 })
-            })
-            .finally(() => {
-                setLoading(false)
-                showModal(false)
-                dispatch(clearCart())
-                navigation.navigate('Home')
             })
     }
 

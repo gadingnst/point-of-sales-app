@@ -1,5 +1,5 @@
 import React from 'react'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { zoomIn, fromRight } from 'react-navigation-transitions'
@@ -118,7 +118,7 @@ const AuthNavigator = createMaterialTopTabNavigator(AuthNavigation, {
     )
 })
 
-export default ({ initialRouteName }) => createAppContainer(createSwitchNavigator(
-    { AuthNavigator, GuestNavigator },
-    { initialRouteName }
-))
+export default ({ initialRouteName }) =>
+    initialRouteName.toLowerCase() === 'guest'
+        ? createAppContainer(GuestNavigator)
+        : createAppContainer(AuthNavigator)
