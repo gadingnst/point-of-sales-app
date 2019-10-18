@@ -115,7 +115,7 @@ export default ({ navigation }) => {
     return (
         <>
             <Header
-                title={isEdit ? "Edit Product" : "Add Product"}
+                title={isEdit ? 'Edit Product' : 'Add Product'}
                 rightComponent={(
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
