@@ -7,7 +7,7 @@ import Header from '../Components/Base/Header'
 import HistoryList from '../Components/History/HistoryList'
 import Http from '../Utils/Http'
 
-export default () => {
+export default ({ navigation }) => {
     const [recent, setRecent] = useState('week')
     const [list, setList] = useState({ totalRows: 0, totalPage: 0, rows: [] })
     const [statistic, setStatistic] = useState({ labels: [0], recent: [{ income: 0 }], last: [{ income: 0 }] })
@@ -73,13 +73,16 @@ export default () => {
                                 }}
                             />
                         </Row>
+                        <Row>
                             <List>
                                 {list.rows.map(hist => (
-                                    <HistoryList key={hist.id} data={hist} />
+                                    <HistoryList
+                                        key={hist.id}
+                                        data={hist}
+                                        onView={data => navigation.navigate('DetailOrder', { data })}
+                                    />
                                 ))}
                             </List>
-                        <Row>
-                            
                         </Row>
                     </Grid>
                 </SafeAreaView>
