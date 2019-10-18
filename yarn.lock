@@ -5329,6 +5329,11 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-content-loader@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-4.3.2.tgz#2f6546c883707d399a2abc2efd00edcb8f584618"
+  integrity sha512-Af2RW2G57+mFRXsiSXROtgvz3KmPz0lATRHNUpJ57DyVw6SRzDRNRXo04I2xhcwmwVnXsfx4s2hsHrU+Lq5jRw==
+
 react-devtools-core@^3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-3.6.3.tgz#977d95b684c6ad28205f0c62e1e12c5f16675814"
@@ -5451,11 +5456,6 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   integrity sha512-tOxHGQUN83MTmQB4ghoQkibqOdGiX4JQEmeyEv96MKWO/x8T2PJv84ECUos9hD3blPRQwVwSpAid1PPPhrVEaw==
   dependencies:
     debounce "^1.2.0"
-
-react-native-skeleton-loader@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-skeleton-loader/-/react-native-skeleton-loader-1.0.3.tgz#93fa1da5bc1cd73b862616695f44d383aeb0958a"
-  integrity sha512-rBLkfLkWDfKfJ5TPfX1wed5iaOsMYtv9zopjtxM8y11nq2J/KZfNKzcXNaSc42ncsjZD9HCqlEXTxYPiAD3IGQ==
 
 react-native-svg@^9.11.1:
   version "9.11.1"

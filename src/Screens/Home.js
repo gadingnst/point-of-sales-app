@@ -44,14 +44,20 @@ export default ({ navigation }) => {
                     <Header
                         title="Home"
                         rightComponent={(
-                            <Button transparent>
+                            <Button transparent onPress={() => navigation.navigate('Search')}>
                                 <Icon type="FontAwesome" name="search" />
                             </Button>
                         )}
                     />
                 )}
                 renderForeground={() => (
-                    <Header homeBanner loading={loading} category={category} title="Home" />
+                    <Header
+                        homeBanner
+                        title="Home"
+                        loading={loading}
+                        category={category}
+                        onSearchbarFocus={() => navigation.navigate('Search')}
+                    />
                 )}
             >
                 <Grid style={styles.rowWrapper}>
@@ -60,6 +66,7 @@ export default ({ navigation }) => {
                         <ProductItem
                             key={item.id}
                             data={item}
+                            onLoading={loading}
                             onView={data => navigation.navigate('DetailProduct', { product: data })}
                         />
                     </Row>

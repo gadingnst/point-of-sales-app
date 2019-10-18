@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { Toast, Text, Button, List, Content, Icon, Spinner } from 'native-base'
+import { View, Toast, Text, Button, List, Content, Icon, Spinner } from 'native-base'
 import { NavigationEvents } from 'react-navigation'
 import { API_BASEURL } from 'react-native-dotenv'
 import Header from '../Components/Base/Header'
@@ -8,6 +8,7 @@ import DataList from '../Components/Manage/DataList'
 import Http from '../Utils/Http'
 import { rupiah } from '../Utils/Helpers'
 import SimpleModal from '../Components/Base/SimpleModal'
+import Colors from '../Assets/Colors'
 
 export default ({ navigation }) => {
     const [products, setProduct] = useState([])
@@ -16,9 +17,11 @@ export default ({ navigation }) => {
     const [modal, showModal] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         Http.get('/api/product')
             .then(({ data: { data } }) => {
                 setProduct(data.rows)
+                setLoading(false)
             })
     }, [])
 
@@ -35,6 +38,7 @@ export default ({ navigation }) => {
 
     const deleteProduct = id => {
         setLoading(true)
+        showModal(false)
         Http.delete(`/api/product/${id}`)
             .then(({ data: { data } }) => {
                 Toast.show({
@@ -53,7 +57,6 @@ export default ({ navigation }) => {
             })
             .finally(() => {
                 setLoading(false)
-                showModal(false)
             })
     }
 
@@ -92,23 +95,33 @@ export default ({ navigation }) => {
                 <Icon type="Entypo" name="add-to-list" />
                 <Text>Add Product</Text>
             </Button>
-            <Content>
-                <List>
-                    {products.map(item => (
-                        <DataList
-                            key={item.id}
-                            image={`${API_BASEURL}/files/image/product/${item.image}`}
-                            title={item.name}
-                            note={`${rupiah(item.price)} | x${item.stock}`}
-                            onPressEdit={() => navigation.navigate('FormProduct', { data: item })}
-                            onPressDelete={() => {
-                                showModal(true)
-                                setCurrentProduct(item)
-                            }}
-                        />
-                    ))}
-                </List>
-            </Content>
+            {
+                loading
+                    ? (
+                        <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+                            <Spinner color={Colors.Primary} size={140} />
+                        </View>
+                    )
+                    : (
+                        <Content>
+                            <List>
+                                {products.map(item => (
+                                    <DataList
+                                        key={item.id}
+                                        image={`${API_BASEURL}/files/image/product/${item.image}`}
+                                        title={item.name}
+                                        note={`${rupiah(item.price)} | x${item.stock}`}
+                                        onPressEdit={() => navigation.navigate('FormProduct', { data: item })}
+                                        onPressDelete={() => {
+                                            showModal(true)
+                                            setCurrentProduct(item)
+                                        }}
+                                    />
+                                ))}
+                            </List>
+                        </Content>
+                    )
+            }
         </>
     )
 }

@@ -1,18 +1,67 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { TouchableOpacity, StyleSheet } from 'react-native'
-import { View, Footer, Icon, Content, List, ListItem, Left, Thumbnail, Body, Right, Text, Button } from 'native-base'
+import { Toast, View, Footer, Icon, Content, List, ListItem, Left, Thumbnail, Body, Right, Text, Button, Spinner } from 'native-base'
 import { API_BASEURL } from 'react-native-dotenv'
 import Header from '../Components/Base/Header'
 import { increaseCartQty, decreaseCartQty, removeCart, clearCart } from '../Redux/Actions/Cart'
+import { setProduct } from '../Redux/Actions/Product'
 import { rupiah } from '../Utils/Helpers'
+import Http from '../Utils/Http'
 import Colors from '../Assets/Colors'
 import SimpleModal from '../Components/Base/SimpleModal'
 
 export default ({ navigation }) => {
     const dispatch = useDispatch()
     const carts = useSelector(({ cart }) => cart.data)
+    const user = useSelector(({ auth }) => auth.user)
+    const products = useSelector(({ product }) => product.data)
     const [modal, showModal] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const checkout = carts => {
+        setLoading(true)
+        const data = {
+            user_id: user.id,
+            amount: carts.reduce((acc, cur) => acc + cur.totalPrice, 0),
+            receipt: String(Date.now()),
+            orders: carts.map(item => ({
+                product_id: item.id,
+                quantity: item.qty,
+                price: item.totalPrice
+            }))
+        }
+
+        Http.post('/api/checkout', data)
+            .then(({ data: { data } }) => {
+                data.orders.forEach(order => {
+                    const idx = products.findIndex(product => product.id === order.product_id)
+                    if (idx > -1) {
+                        const newState = [...products]
+                        newState[idx].stock = newState[idx].stock - order.quantity
+                        dispatch(setProduct(newState))
+                    }
+                })
+                Toast.show({
+                    type: 'success',
+                    text: 'Success checkout!',
+                    position: 'top'
+                })
+            })
+            .catch(({ response }) => {
+                Toast.show({
+                    type: 'danger',
+                    text: response.data.message,
+                    position: 'top'
+                })
+            })
+            .finally(() => {
+                setLoading(false)
+                showModal(false)
+                dispatch(clearCart())
+                navigation.navigate('Home')
+            })
+    }
 
     return (
         <>
@@ -87,7 +136,8 @@ export default ({ navigation }) => {
                         <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
                             <Text>Cancel</Text>
                         </Button>
-                        <Button primary style={{ ...styles.btnModalAction }} onPress={() => checkout(carts)}>
+                        <Button disabled={loading} primary style={{ ...styles.btnModalAction }} onPress={() => checkout(carts)}>
+                            {!loading || <Spinner color="#fff" />}
                             <Text>Checkout</Text>
                         </Button>
                     </>
