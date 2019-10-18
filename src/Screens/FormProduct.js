@@ -133,7 +133,7 @@ export default ({ navigation }) => {
                         <Picker
                             mode="dropdown"
                             placeholder="Select Product Category"
-                            placeholderStyle={{ color: "#bfc6ea" }}
+                            placeholderStyle={{ color: '#bfc6ea' }}
                             placeholderIconColor="#007aff"
                             selectedValue={!!category.length ? category : null}
                             onValueChange={value => setCategory(value)}
