@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, SafeAreaView } from 'react-native'
 import { Text, View, Picker, List, Content } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { LineChart } from 'react-native-chart-kit'
 import Header from '../Components/Base/Header'
 import HistoryList from '../Components/History/HistoryList'
 import Http from '../Utils/Http'
-import SafeAreaView from 'react-native-safe-area-view'
 
 export default () => {
     const [recent, setRecent] = useState('week')
