@@ -26,9 +26,17 @@ export default props => {
                     </View>
                     <View style={styles.categoryWrapper}>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingVertical: 20, backgroundColor: 'rgba(255, 255, 255, .15)' }}>
-                        {category.map(item => (
-                            <CategoryCard key={item.id} id={item.id} name={item.name} onPress={(event, id) => props.onPressCategory ? props.onPressCategory(event, id) : false} />
-                        ))}
+                        {
+                            props.loading
+                                ? (
+                                    <CategoryCard name="Loading Category..." />
+                                )
+                                : (
+                                    category.map(item => (
+                                        <CategoryCard key={item.id} id={item.id} name={item.name} onPress={(event, id) => props.onPressCategory ? props.onPressCategory(event, id) : false} />
+                                    ))
+                                )
+                        }
                         </ScrollView>
                     </View>
                 </Gradient>

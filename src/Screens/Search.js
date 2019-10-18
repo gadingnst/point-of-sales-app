@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { NavigationEvents } from 'react-navigation'
-import { Item, Icon, Input, View, Picker, Content, Button, Text, Spinner } from 'native-base'
+import { Toast, Item, Icon, Input, View, Picker, Content, Button, Text, Spinner } from 'native-base'
 import Header from '../Components/Base/Header'
 import ProductItem from '../Components/Product/ProductItem'
 import Http from '../Utils/Http'
@@ -39,8 +39,15 @@ export default props => {
                     })
                     resolve(data)
                 })
-                .catch(({ response }) => {
-                    reject(response)
+                .catch(err => {
+                    Toast.show({
+                        text: err.message === 'Network Error'
+                            ? `Network Error: Your connection can't be established.`
+                            : `Can't login, ${err.response.data.message}`,
+                        type: 'danger',
+                        position: 'top'
+                    })
+                    reject(err)
                 })
                 .finally(() => setLoading(false))
         })

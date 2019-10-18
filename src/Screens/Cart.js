@@ -52,12 +52,14 @@ export default ({ navigation }) => {
                     position: 'top'
                 })
             })
-            .catch(({ response }) => {
+            .catch(err => {
                 setLoading(false)
                 showModal(false)
                 Toast.show({
+                    text: err.message === 'Network Error'
+                        ? `Network Error: Your connection can't be established.`
+                        : `Can't login, ${err.response.data.message}`,
                     type: 'danger',
-                    text: response.data.message,
                     position: 'top'
                 })
             })

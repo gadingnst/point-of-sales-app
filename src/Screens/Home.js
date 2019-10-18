@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
 import { Grid, Row } from 'react-native-easy-grid'
-import { Button, Icon } from 'native-base'
+import { Button, Icon, Toast } from 'native-base'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { setProduct } from '../Redux/Actions/Product'
 import Header from '../Components/Base/Header'
@@ -15,7 +16,8 @@ export default ({ navigation }) => {
     const [category, setCategory] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
+    const fetchProduct = () => {
+        setLoading(true)
         Promise.all([
             Http.get('/api/category')
                 .then(({ data: { data } }) => data),
@@ -29,11 +31,26 @@ export default ({ navigation }) => {
                 qty: 1,
                 totalPrice: data.price
             }))))
+        }).catch(err => {
+            Toast.show({
+                text: err.message === 'Network Error'
+                    ? `Network Error: Your connection can't be established.`
+                    : `Can't login, ${err.response.data.message}`,
+                type: 'danger',
+                position: 'top'
+            })
         })
+    }
+
+    useEffect(() => {
+        fetchProduct()    
     }, [])
 
     return (
         <>
+            <NavigationEvents
+                onWillFocus={() => fetchProduct()}
+            />
             <ParallaxScrollView
                 backgroundColor="#f27e7c"
                 parallaxHeaderHeight={400}
@@ -73,7 +90,6 @@ export default ({ navigation }) => {
                 ))}
                 </Grid>
             </ParallaxScrollView>
-            
         </>
     )
 }
