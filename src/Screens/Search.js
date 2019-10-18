@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavigationEvents } from 'react-navigation'
 import { Item, Icon, Input, View, Picker, Content, Button, Text, Spinner } from 'native-base'
 import Header from '../Components/Base/Header'
 import ProductItem from '../Components/Product/ProductItem'
@@ -79,6 +80,9 @@ export default props => {
                     />
                 ))}
             </Content>
+            <NavigationEvents
+                onWillFocus={({ state }) => state.params.current ? fetchProduct({ category: state.params.current }) : false}
+            />
         </>
     )
 }
