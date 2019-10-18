@@ -55,7 +55,14 @@ export default props => {
 
     return (
         <>
-            <Header title="Search" />
+            <Header
+                title="Search"
+                rightComponent={(
+                    <Button transparent onPress={() => props.navigation.goBack()}>
+                        <Text>Back</Text>
+                    </Button>
+                )}
+            />
             <View>
                 <Item>
                     <Input onSubmitEditing={() => fetchProduct()} onChangeText={value => setSearch(value)} placeholder='Search Product..'/>
