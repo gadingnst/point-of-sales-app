@@ -73,7 +73,7 @@ export default ({ navigation }) => {
                         loading={loading}
                         category={category}
                         onSearchbarFocus={() => navigation.navigate('Search', { category })}
-                        onPressCategory={(event, id) => navigation.navigate('Search', { category, current: id })}
+                        onPressCategory={id => navigation.navigate('Search', { category, current: id })}
                     />
                 )}
             >

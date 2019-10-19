@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View, Text } from 'native-base'
 
 export default props => (
-    <TouchableOpacity onPress={event => props.onPress ? props.onPress(event, props.id) : false}>
+    <TouchableOpacity onPress={() => props.onPress ? props.onPress(props.id) : false}>
         <View style={styles.card}>
             <Text>{props.name}</Text>
         </View>

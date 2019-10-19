@@ -1,7 +1,7 @@
 import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { zoomIn, fromRight } from 'react-navigation-transitions'
 import Footer from './Components/Base/Footer'
 import Home from './Screens/Home'
@@ -109,10 +109,9 @@ const AuthNavigation = {
 const GuestNavigation = { Home, Login }
 
 const GuestNavigator = createStackNavigator(GuestNavigation, { ...opts, initialRouteName: 'Login' })
-const AuthNavigator = createMaterialTopTabNavigator(AuthNavigation, {
+const AuthNavigator = createBottomTabNavigator(AuthNavigation, {
     ...opts,
     initialRouteName: 'Home',
-    tabBarPosition: 'bottom',
     tabBarComponent: props => (
         <Footer {...props} />
     )

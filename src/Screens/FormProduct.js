@@ -33,7 +33,8 @@ export default ({ navigation }) => {
             else if (res.error) {
                 Toast.show({
                     type: 'danger',
-                    text: `An error occured while select image: ${res.error}`
+                    text: `An error occured while select image: ${res.error}`,
+                    position: 'top'
                 })
             } else {
                 setImage({

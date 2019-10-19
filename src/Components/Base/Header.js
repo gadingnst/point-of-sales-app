@@ -20,7 +20,7 @@ export default props => {
                     <View style={styles.formSearchWrapper}>
                         <Text style={styles.title}>{props.title}</Text>
                         <Item rounded style={styles.search}>
-                            <Input onFocus={props.onSearchbarFocus} placeholder="Search Product..." />
+                            <Input onFocus={() => props.onSearchbarFocus()} placeholder="Search Product..." />
                             <Icon name="search" />
                         </Item>
                     </View>
@@ -33,7 +33,7 @@ export default props => {
                                 )
                                 : (
                                     category.map(item => (
-                                        <CategoryCard key={item.id} id={item.id} name={item.name} onPress={(event, id) => props.onPressCategory ? props.onPressCategory(event, id) : false} />
+                                        <CategoryCard key={item.id} id={item.id} name={item.name} onPress={id => props.onPressCategory ? props.onPressCategory(id) : false} />
                                     ))
                                 )
                         }
