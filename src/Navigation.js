@@ -118,7 +118,10 @@ const AuthNavigator = createMaterialTopTabNavigator(AuthNavigation, {
     )
 })
 
-export default ({ initialRouteName }) =>
-    initialRouteName.toLowerCase() === 'guest'
-        ? createAppContainer(GuestNavigator)
-        : createAppContainer(AuthNavigator)
+export const AuthNav = createAppContainer(AuthNavigator)
+export const GuestNav = createAppContainer(GuestNavigator)
+
+export default {
+    AuthNav: createAppContainer(AuthNavigator),
+    GuestNav: createAppContainer(GuestNavigator)
+}
