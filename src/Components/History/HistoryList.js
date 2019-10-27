@@ -4,9 +4,14 @@ import { API_BASEURL } from 'react-native-dotenv'
 import { rupiah } from '../../Utils/Helpers'
 
 export default ({ data, onView }) => (
-    <ListItem avatar onPress={() => onView ? onView(data) : false}>
+    <ListItem avatar onPress={() => (onView ? onView(data) : false)}>
         <Left>
-            <Thumbnail source={{ uri: `${API_BASEURL}/files/image/product/${!data.Orders[0] || data.Orders[0].Product.image}` }} />
+            <Thumbnail
+                source={{
+                    uri: `${API_BASEURL}/files/image/product/${!data
+                        .Orders[0] || data.Orders[0].Product.image}`
+                }}
+            />
         </Left>
         <Body>
             <Text>Receipt: #{data.receipt}</Text>

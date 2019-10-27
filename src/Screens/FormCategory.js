@@ -1,5 +1,16 @@
 import React, { useState } from 'react'
-import { Spinner, Toast, Text, Button, Content, Form, Item, Label, Input, Textarea, Picker, View } from 'native-base'
+import {
+    Spinner,
+    Toast,
+    Text,
+    Button,
+    Content,
+    Form,
+    Item,
+    Label,
+    Input,
+    View
+} from 'native-base'
 import Header from '../Components/Base/Header'
 import Http from '../Utils/Http'
 
@@ -47,9 +58,10 @@ export default ({ navigation }) => {
             })
             .catch(err => {
                 Toast.show({
-                    text: err.message === 'Network Error'
-                        ? `Network Error: Your connection can't be established.`
-                        : `Can't login, ${err.response.data.message}`,
+                    text:
+                        err.message === 'Network Error'
+                            ? "Network Error: Your connection can't be established."
+                            : `${err.response.data.message}`,
                     type: 'danger',
                     position: 'top'
                 })
@@ -57,30 +69,39 @@ export default ({ navigation }) => {
             .finally(() => setLoading(false))
     }
 
-
     return (
         <>
             <Header
                 title={isEdit ? 'Edit Category' : 'Add Category'}
-                rightComponent={(
+                rightComponent={
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <Content>
                 <Form style={{ padding: 5 }}>
                     <Item stackedLabel>
                         <Label>Category Name</Label>
-                        <Input value={name} onChangeText={value => setName(value)} />
+                        <Input
+                            value={name}
+                            onChangeText={value => setName(value)}
+                        />
                     </Item>
                     <View style={{ padding: 15 }}>
-                        <Button disabled={loading} primary block style={{ borderRadius: 10 }} onPress={() => handleSave()}>
-                            {
-                                loading
-                                    ? <Spinner color="#fb6340" />
-                                    : <Text>{isEdit ? 'Update' : 'Create'} Category</Text>
-                            }
+                        <Button
+                            disabled={loading}
+                            primary
+                            block
+                            style={{ borderRadius: 10 }}
+                            onPress={() => handleSave()}>
+                            {loading ? (
+                                <Spinner color="#fb6340" />
+                            ) : (
+                                <Text>
+                                    {isEdit ? 'Update' : 'Create'} Category
+                                </Text>
+                            )}
                         </Button>
                     </View>
                 </Form>

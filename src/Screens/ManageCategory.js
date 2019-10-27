@@ -16,11 +16,10 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         setLoading(true)
-        Http.get('/api/category')
-            .then(({ data: { data } }) => {
-                setCategories(data)
-                setLoading(false)
-            })
+        Http.get('/api/category').then(({ data: { data } }) => {
+            setCategories(data)
+            setLoading(false)
+        })
     }, [])
 
     const onScreenFocus = ({ data, type }) => {
@@ -49,7 +48,9 @@ export default ({ navigation }) => {
             .catch(({ response }) => {
                 Toast.show({
                     type: 'danger',
-                    text: `Failed to deleting category: ${response.data.message}`,
+                    text: `Failed to deleting category: ${
+                        response.data.message
+                    }`,
                     position: 'top'
                 })
             })
@@ -61,15 +62,19 @@ export default ({ navigation }) => {
     return (
         <>
             <NavigationEvents
-                onDidFocus={({ state }) => state.params ? onScreenFocus(state.params) : false}
+                onDidFocus={({ state }) =>
+                    state.params ? onScreenFocus(state.params) : false
+                }
             />
             <Header
                 title="Manage Category"
-                rightComponent={(
-                    <Button transparent onPress={() => navigation.navigate('Manage')}>
+                rightComponent={
+                    <Button
+                        transparent
+                        onPress={() => navigation.navigate('Manage')}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <SimpleModal
                 text="Are you sure want delete category ?"
@@ -77,47 +82,59 @@ export default ({ navigation }) => {
                 animationIn="zoomIn"
                 animationInTiming={500}
                 animationOut="zoomOut"
-                actions={(
+                actions={
                     <>
-                        <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
+                        <Button
+                            style={{
+                                ...styles.btnModalAction,
+                                backgroundColor: '#999'
+                            }}
+                            onPress={() => showModal(false)}>
                             <Text>Cancel</Text>
                         </Button>
-                        <Button danger style={{ ...styles.btnModalAction }} onPress={() => deleteCategory(currentCategory.id)}>
+                        <Button
+                            danger
+                            style={{ ...styles.btnModalAction }}
+                            onPress={() => deleteCategory(currentCategory.id)}>
                             {!loading || <Spinner color="#fff" />}
                             <Text>DELETE</Text>
                         </Button>
                     </>
-                )}
+                }
             />
-            <Button block primary iconLeft onPress={() => navigation.navigate('FormCategory')}>
+            <Button
+                block
+                primary
+                iconLeft
+                onPress={() => navigation.navigate('FormCategory')}>
                 <Icon type="Entypo" name="add-to-list" />
                 <Text>Add Category</Text>
             </Button>
-            {
-                loading
-                    ? (
-                        <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-                            <Spinner color={Colors.Primary} size={140} />
-                        </View>
-                    )
-                    : (
-                        <Content>
-                            <List>
-                                {categories.map(item => (
-                                    <DataList
-                                        key={item.id}
-                                        title={item.name}
-                                        onPressEdit={() => navigation.navigate('FormCategory', { data: item })}
-                                        onPressDelete={() => {
-                                            showModal(true)
-                                            setCurrentCategory(item)
-                                        }}
-                                    />
-                                ))}
-                            </List>
-                        </Content>
-                    )
-            }
+            {loading ? (
+                <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+                    <Spinner color={Colors.Primary} size={140} />
+                </View>
+            ) : (
+                <Content>
+                    <List>
+                        {categories.map(item => (
+                            <DataList
+                                key={item.id}
+                                title={item.name}
+                                onPressEdit={() =>
+                                    navigation.navigate('FormCategory', {
+                                        data: item
+                                    })
+                                }
+                                onPressDelete={() => {
+                                    showModal(true)
+                                    setCurrentCategory(item)
+                                }}
+                            />
+                        ))}
+                    </List>
+                </Content>
+            )}
         </>
     )
 }

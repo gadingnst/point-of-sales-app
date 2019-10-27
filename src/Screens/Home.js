@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { StyleSheet } from 'react-native'
-import { NavigationEvents } from 'react-navigation'
 import { Grid, Row } from 'react-native-easy-grid'
 import { Button, Icon, Toast } from 'native-base'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
@@ -19,38 +18,40 @@ export default ({ navigation }) => {
     const fetchProduct = () => {
         setLoading(true)
         Promise.all([
-            Http.get('/api/category')
-                .then(({ data: { data } }) => data),
-            Http.get('/api/product')
-                .then(({ data: { data } }) => data.rows)
-        ]).then(([category, products]) => {
-            setLoading(false)
-            setCategory(category)
-            dispatch(setProduct(products.map(data => ({
-                ...data,
-                qty: 1,
-                totalPrice: data.price
-            }))))
-        }).catch(err => {
-            Toast.show({
-                text: err.message === 'Network Error'
-                    ? `Network Error: Your connection can't be established.`
-                    : `Can't login, ${err.response.data.message}`,
-                type: 'danger',
-                position: 'top'
+            Http.get('/api/category').then(({ data: { data } }) => data),
+            Http.get('/api/product').then(({ data: { data } }) => data.rows)
+        ])
+            .then(([category, products]) => {
+                setLoading(false)
+                setCategory(category)
+                dispatch(
+                    setProduct(
+                        products.map(data => ({
+                            ...data,
+                            qty: 1,
+                            totalPrice: data.price
+                        }))
+                    )
+                )
             })
-        })
+            .catch(err => {
+                Toast.show({
+                    text:
+                        err.message === 'Network Error'
+                            ? "Network Error: Your connection can't be established."
+                            : `${err.response.data.message}`,
+                    type: 'danger',
+                    position: 'top'
+                })
+            })
     }
 
     useEffect(() => {
-        fetchProduct()    
+        fetchProduct()
     }, [])
 
     return (
         <>
-            <NavigationEvents
-                onWillFocus={() => fetchProduct()}
-            />
             <ParallaxScrollView
                 backgroundColor="#f27e7c"
                 parallaxHeaderHeight={400}
@@ -59,11 +60,15 @@ export default ({ navigation }) => {
                 renderStickyHeader={() => (
                     <Header
                         title="Home"
-                        rightComponent={(
-                            <Button transparent onPress={() => navigation.navigate('Search', { category })}>
+                        rightComponent={
+                            <Button
+                                transparent
+                                onPress={() =>
+                                    navigation.navigate('Search', { category })
+                                }>
                                 <Icon type="FontAwesome" name="search" />
                             </Button>
-                        )}
+                        }
                     />
                 )}
                 renderForeground={() => (
@@ -72,22 +77,32 @@ export default ({ navigation }) => {
                         title="Home"
                         loading={loading}
                         category={category}
-                        onSearchbarFocus={() => navigation.navigate('Search', { category })}
-                        onPressCategory={id => navigation.navigate('Search', { category, current: id })}
+                        onSearchbarFocus={() =>
+                            navigation.navigate('Search', { category })
+                        }
+                        onPressCategory={id =>
+                            navigation.navigate('Search', {
+                                category,
+                                current: id
+                            })
+                        }
                     />
-                )}
-            >
+                )}>
                 <Grid style={styles.rowWrapper}>
-                {products.map(item => (
-                    <Row key={item.id} style={styles.row}>
-                        <ProductItem
-                            key={item.id}
-                            data={item}
-                            onLoading={loading}
-                            onView={data => navigation.navigate('DetailProduct', { product: data })}
-                        />
-                    </Row>
-                ))}
+                    {products.map(item => (
+                        <Row key={item.id} style={styles.row}>
+                            <ProductItem
+                                key={item.id}
+                                data={item}
+                                onLoading={loading}
+                                onView={data =>
+                                    navigation.navigate('DetailProduct', {
+                                        product: data
+                                    })
+                                }
+                            />
+                        </Row>
+                    ))}
                 </Grid>
             </ParallaxScrollView>
         </>

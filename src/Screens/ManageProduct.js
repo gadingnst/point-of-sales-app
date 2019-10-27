@@ -18,11 +18,10 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         setLoading(true)
-        Http.get('/api/product')
-            .then(({ data: { data } }) => {
-                setProduct(data.rows)
-                setLoading(false)
-            })
+        Http.get('/api/product').then(({ data: { data } }) => {
+            setProduct(data.rows)
+            setLoading(false)
+        })
     }, [])
 
     const onScreenFocus = ({ data, type }) => {
@@ -51,7 +50,9 @@ export default ({ navigation }) => {
             .catch(({ response }) => {
                 Toast.show({
                     type: 'danger',
-                    text: `Failed to deleting product: ${response.data.message}`,
+                    text: `Failed to deleting product: ${
+                        response.data.message
+                    }`,
                     position: 'top'
                 })
             })
@@ -63,15 +64,19 @@ export default ({ navigation }) => {
     return (
         <>
             <NavigationEvents
-                onDidFocus={({ state }) => state.params ? onScreenFocus(state.params) : false}
+                onDidFocus={({ state }) =>
+                    state.params ? onScreenFocus(state.params) : false
+                }
             />
             <Header
                 title="Manage Product"
-                rightComponent={(
-                    <Button transparent onPress={() => navigation.navigate('Manage')}>
+                rightComponent={
+                    <Button
+                        transparent
+                        onPress={() => navigation.navigate('Manage')}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <SimpleModal
                 text="Are you sure want delete product ?"
@@ -79,49 +84,63 @@ export default ({ navigation }) => {
                 animationIn="zoomIn"
                 animationInTiming={500}
                 animationOut="zoomOut"
-                actions={(
+                actions={
                     <>
-                        <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
+                        <Button
+                            style={{
+                                ...styles.btnModalAction,
+                                backgroundColor: '#999'
+                            }}
+                            onPress={() => showModal(false)}>
                             <Text>Cancel</Text>
                         </Button>
-                        <Button danger style={{ ...styles.btnModalAction }} onPress={() => deleteProduct(currentProduct.id)}>
+                        <Button
+                            danger
+                            style={{ ...styles.btnModalAction }}
+                            onPress={() => deleteProduct(currentProduct.id)}>
                             {!loading || <Spinner color="#fff" />}
                             <Text>DELETE</Text>
                         </Button>
                     </>
-                )}
+                }
             />
-            <Button block primary iconLeft onPress={() => navigation.navigate('FormProduct')}>
+            <Button
+                block
+                primary
+                iconLeft
+                onPress={() => navigation.navigate('FormProduct')}>
                 <Icon type="Entypo" name="add-to-list" />
                 <Text>Add Product</Text>
             </Button>
-            {
-                loading
-                    ? (
-                        <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-                            <Spinner color={Colors.Primary} size={140} />
-                        </View>
-                    )
-                    : (
-                        <Content>
-                            <List>
-                                {products.map(item => (
-                                    <DataList
-                                        key={item.id}
-                                        image={`${API_BASEURL}/files/image/product/${item.image}`}
-                                        title={item.name}
-                                        note={`${rupiah(item.price)} | x${item.stock}`}
-                                        onPressEdit={() => navigation.navigate('FormProduct', { data: item })}
-                                        onPressDelete={() => {
-                                            showModal(true)
-                                            setCurrentProduct(item)
-                                        }}
-                                    />
-                                ))}
-                            </List>
-                        </Content>
-                    )
-            }
+            {loading ? (
+                <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+                    <Spinner color={Colors.Primary} size={140} />
+                </View>
+            ) : (
+                <Content>
+                    <List>
+                        {products.map(item => (
+                            <DataList
+                                key={item.id}
+                                image={`${API_BASEURL}/files/image/product/${
+                                    item.image
+                                }`}
+                                title={item.name}
+                                note={`${rupiah(item.price)} | x${item.stock}`}
+                                onPressEdit={() =>
+                                    navigation.navigate('FormProduct', {
+                                        data: item
+                                    })
+                                }
+                                onPressDelete={() => {
+                                    showModal(true)
+                                    setCurrentProduct(item)
+                                }}
+                            />
+                        ))}
+                    </List>
+                </Content>
+            )}
         </>
     )
 }

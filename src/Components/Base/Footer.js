@@ -13,20 +13,33 @@ export default props => {
             <>
                 <Footer>
                     <FooterTab style={{ backgroundColor: Colors.Primary }}>
-                        <Button onPress={() => nav.navigate('Home')} active={nav.state.index === 0}>
+                        <Button
+                            onPress={() => nav.navigate('Home')}
+                            active={nav.state.index === 0}>
                             <Icon type="FontAwesome" name="th-large" />
                         </Button>
-                        <Button onPress={() => nav.navigate('Manage')} active={nav.state.index === 1}>
+                        <Button
+                            onPress={() => nav.navigate('Manage')}
+                            active={nav.state.index === 1}>
                             <Icon type="FontAwesome" name="pencil-square" />
                         </Button>
-                        <Button onPress={() => nav.navigate('History')} active={nav.state.index === 2}>
+                        <Button
+                            onPress={() => nav.navigate('History')}
+                            active={nav.state.index === 2}>
                             <Icon type="FontAwesome" name="line-chart" />
                         </Button>
-                        <Button badge onPress={() => nav.navigate('Cart')} active={nav.state.index === 3}>
-                            <Badge><Text>{countCart}</Text></Badge>
+                        <Button
+                            badge
+                            onPress={() => nav.navigate('Cart')}
+                            active={nav.state.index === 3}>
+                            <Badge>
+                                <Text>{countCart}</Text>
+                            </Badge>
                             <Icon name="cart" />
                         </Button>
-                        <Button onPress={() => nav.navigate('Account')} active={nav.state.index === 4}>
+                        <Button
+                            onPress={() => nav.navigate('Account')}
+                            active={nav.state.index === 4}>
                             <Icon type="FontAwesome" name="user" />
                         </Button>
                     </FooterTab>

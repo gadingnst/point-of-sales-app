@@ -7,18 +7,20 @@ export default props => (
         isVisible={props.isVisible}
         animationIn={props.animationIn}
         animationOut={props.animationOut}
-        animationInTiming={props.animationInTiming}
-    >
+        animationInTiming={props.animationInTiming}>
         <View style={styles.modal}>
-            <Text style={{ flex: 1, fontWeight: 'bold', fontSize: 16 }}>{props.text}</Text>
-            <View style={styles.modalActionWrapper}>
-                {props.actions}
-            </View>
+            <Text style={styles.text}>{props.text}</Text>
+            <View style={styles.modalActionWrapper}>{props.actions}</View>
         </View>
     </Modal>
 )
 
 const styles = StyleSheet.create({
+    text: {
+        flex: 1,
+        fontWeight: 'bold',
+        fontSize: 16
+    },
     modalActionWrapper: {
         flex: 1,
         flexDirection: 'row',

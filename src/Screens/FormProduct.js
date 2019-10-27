@@ -21,11 +21,13 @@ export default ({ navigation }) => {
         setLoading(true)
         const opts = {
             title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+            customButtons: [
+                { name: 'fb', title: 'Choose Photo from Facebook' }
+            ],
             storageOptions: {
                 skipBackup: true,
-                path: 'images',
-            },
+                path: 'images'
+            }
         }
         ImagePicker.launchImageLibrary(opts, res => {
             if (res.didCancel) {}
@@ -96,9 +98,10 @@ export default ({ navigation }) => {
             })
             .catch(err => {
                 Toast.show({
-                    text: err.message === 'Network Error'
-                        ? `Network Error: Your connection can't be established.`
-                        : `Can't login, ${err.response.data.message}`,
+                    text:
+                        err.message === 'Network Error'
+                            ? "Network Error: Your connection can't be established."
+                            : `Error, ${err.response.data.message}`,
                     type: 'danger',
                     position: 'top'
                 })
@@ -119,17 +122,20 @@ export default ({ navigation }) => {
         <>
             <Header
                 title={isEdit ? 'Edit Product' : 'Add Product'}
-                rightComponent={(
+                rightComponent={
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <Content>
                 <Form style={{ padding: 5 }}>
                     <Item stackedLabel>
                         <Label>Product Name</Label>
-                        <Input value={name} onChangeText={value => setName(value)} />
+                        <Input
+                            value={name}
+                            onChangeText={value => setName(value)}
+                        />
                     </Item>
                     <Text style={{ padding: 15 }}>Product Category</Text>
                     <Item picker style={{ paddingHorizontal: 8 }}>
@@ -139,40 +145,80 @@ export default ({ navigation }) => {
                             placeholderStyle={{ color: '#bfc6ea' }}
                             placeholderIconColor="#007aff"
                             selectedValue={!!category.length ? category : null}
-                            onValueChange={value => setCategory(value)}
-                        >
+                            onValueChange={value => setCategory(value)}>
                             {categories.map(item => (
-                                <Picker.Item key={item.id} label={item.name} value={item.id} />
+                                <Picker.Item
+                                    key={item.id}
+                                    label={item.name}
+                                    value={item.id}
+                                />
                             ))}
                         </Picker>
                     </Item>
                     <Item stackedLabel>
                         <Label>Product Price</Label>
-                        <Input value={String(price)} onChangeText={value => setPrice(Number(value))} keyboardType="number-pad" />
+                        <Input
+                            value={String(price)}
+                            onChangeText={value => setPrice(Number(value))}
+                            keyboardType="number-pad"
+                        />
                     </Item>
                     <Item stackedLabel>
                         <Label>Product Stock</Label>
-                        <Input value={String(stock)} onChangeText={value => setStock(Number(value))} keyboardType="number-pad" />
+                        <Input
+                            value={String(stock)}
+                            onChangeText={value => setStock(Number(value))}
+                            keyboardType="number-pad"
+                        />
                     </Item>
                     <View style={{ paddingHorizontal: 8 }}>
-                        <Textarea value={description} onChangeText={value => setDescription(value)} rowSpan={5} bordered placeholder="Product Description" />
-                        <Text style={{ marginVertical: 8 }}>Product Image (Optional)</Text>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
+                        <Textarea
+                            value={description}
+                            onChangeText={value => setDescription(value)}
+                            rowSpan={5}
+                            bordered
+                            placeholder="Product Description"
+                        />
+                        <Text style={{ marginVertical: 8 }}>
+                            Product Image (Optional)
+                        </Text>
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginVertical: 10
+                            }}>
                             <TouchableOpacity onPress={() => imagePicker()}>
                                 <Image
-                                    style={{ width: 120, height: 120, borderRadius: 10 }}
-                                    source={image ? { uri: image.uri } : require('../Assets/Image/placeholder.png') }
+                                    style={{
+                                        width: 120,
+                                        height: 120,
+                                        borderRadius: 10
+                                    }}
+                                    source={
+                                        image
+                                            ? { uri: image.uri }
+                                            : require('../Assets/Image/placeholder.png')
+                                    }
                                 />
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View style={{ padding: 15 }}>
-                        <Button disabled={loading} primary block style={{ borderRadius: 10 }} onPress={() => handleSave()}>
-                            {
-                                loading
-                                    ? <Spinner color="#fb6340" />
-                                    : <Text>{isEdit ? 'Update' : 'Create'} Product</Text>
-                            }
+                        <Button
+                            disabled={loading}
+                            primary
+                            block
+                            style={{ borderRadius: 10 }}
+                            onPress={() => handleSave()}>
+                            {loading ? (
+                                <Spinner color="#fb6340" />
+                            ) : (
+                                <Text>
+                                    {isEdit ? 'Update' : 'Create'} Product
+                                </Text>
+                            )}
                         </Button>
                     </View>
                 </Form>

@@ -8,11 +8,11 @@ export default ({ navigation }) => {
         <>
             <Header
                 title="Manage User"
-                rightComponent={(
+                rightComponent={
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <Grid style={{ padding: 50 }}>
                 <Row>

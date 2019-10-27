@@ -21,10 +21,20 @@ export default ({ navigation }) => {
     return (
         <>
             <Header title="Account" />
-            <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignContent: 'center'
+                }}>
                 <Text style={{ textAlign: 'center' }}>Halo, {user.name}..</Text>
-                <Text style={{ textAlign: 'center' }}>Are want to Logout ?</Text>
-                <Button block onPress={() => showModal(true)} style={{ margin: 15, borderRadius: 10 }}>
+                <Text style={{ textAlign: 'center' }}>
+                    Are want to Logout ?
+                </Text>
+                <Button
+                    block
+                    onPress={() => showModal(true)}
+                    style={{ margin: 15, borderRadius: 10 }}>
                     <Text>Logout</Text>
                 </Button>
             </View>
@@ -34,16 +44,24 @@ export default ({ navigation }) => {
                 animationIn="zoomIn"
                 animationInTiming={500}
                 animationOut="zoomOut"
-                actions={(
+                actions={
                     <>
-                        <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
+                        <Button
+                            style={{
+                                ...styles.btnModalAction,
+                                backgroundColor: '#999'
+                            }}
+                            onPress={() => showModal(false)}>
                             <Text>Cancel</Text>
                         </Button>
-                        <Button danger style={{ ...styles.btnModalAction }} onPress={() => onLogout()}>
+                        <Button
+                            danger
+                            style={{ ...styles.btnModalAction }}
+                            onPress={() => onLogout()}>
                             <Text>Log Out</Text>
                         </Button>
                     </>
-                )}
+                }
             />
         </>
     )

@@ -27,7 +27,11 @@ export default props => {
         setPage(page)
 
         return new Promise((resolve, reject) => {
-            Http.get(`/api/product?limit=12&page=${page}&search=${search}${category ? `&category=${category}` : ''}`)
+            Http.get(
+                `/api/product?limit=12&page=${page}&search=${search}${
+                    category ? `&category=${category}` : ''
+                }`
+            )
                 .then(({ data: { data } }) => {
                     setProduct({
                         totalRows: data.totalRows,
@@ -41,9 +45,10 @@ export default props => {
                 })
                 .catch(err => {
                     Toast.show({
-                        text: err.message === 'Network Error'
-                            ? `Network Error: Your connection can't be established.`
-                            : `Can't login, ${err.response.data.message}`,
+                        text:
+                            err.message === 'Network Error'
+                                ? "Network Error: Your connection can't be established."
+                                : `${err.response.data.message}`,
                         type: 'danger',
                         position: 'top'
                     })
@@ -57,29 +62,46 @@ export default props => {
         <>
             <Header
                 title="Search"
-                rightComponent={(
-                    <Button transparent onPress={() => props.navigation.goBack()}>
+                rightComponent={
+                    <Button
+                        transparent
+                        onPress={() => props.navigation.goBack()}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <View>
                 <Item>
-                    <Input onSubmitEditing={() => fetchProduct()} onChangeText={value => setSearch(value)} placeholder='Search Product..'/>
-                    <Icon active name='search' />
+                    <Input
+                        onSubmitEditing={() => fetchProduct()}
+                        onChangeText={value => setSearch(value)}
+                        placeholder="Search Product.."
+                    />
+                    <Icon active name="search" />
                 </Item>
                 <Item picker>
                     <Picker
                         selectedValue={categoryState}
-                        onValueChange={value => value === 'all' ? setCategory(null) : setCategory(value)}
-                    >
+                        onValueChange={value =>
+                            value === 'all'
+                                ? setCategory(null)
+                                : setCategory(value)
+                        }>
                         <Picker.Item label="All Category" value="all" />
                         {categories.map(item => (
-                            <Picker.Item key={item.id} label={item.name} value={item.id} />
+                            <Picker.Item
+                                key={item.id}
+                                label={item.name}
+                                value={item.id}
+                            />
                         ))}
                     </Picker>
                 </Item>
-                <Button block primary disabled={loading} onPress={() => fetchProduct()}>
+                <Button
+                    block
+                    primary
+                    disabled={loading}
+                    onPress={() => fetchProduct()}>
                     {!loading || <Spinner color="#fff" />}
                     <Text>Search</Text>
                 </Button>
@@ -90,12 +112,20 @@ export default props => {
                         key={i}
                         data={item}
                         onLoading={loading}
-                        onView={data => props.navigation.navigate('DetailProduct', { product: data })}
+                        onView={data =>
+                            props.navigation.navigate('DetailProduct', {
+                                product: data
+                            })
+                        }
                     />
                 ))}
             </Content>
             <NavigationEvents
-                onWillFocus={({ state }) => state.params.current ? fetchProduct({ category: state.params.current }) : false}
+                onWillFocus={({ state }) =>
+                    state.params.current
+                        ? fetchProduct({ category: state.params.current })
+                        : false
+                }
             />
         </>
     )

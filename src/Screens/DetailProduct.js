@@ -9,11 +9,11 @@ export default ({ navigation }) => {
         <>
             <Header
                 title={data.name}
-                rightComponent={(
+                rightComponent={
                     <Button transparent onPress={() => navigation.goBack()}>
                         <Text>Back</Text>
                     </Button>
-                )}
+                }
             />
             <Grid style={{ flex: 1 }}>
                 <Row>

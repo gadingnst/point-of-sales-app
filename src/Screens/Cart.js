@@ -35,10 +35,13 @@ export default ({ navigation }) => {
         Http.post('/api/checkout', data)
             .then(({ data: { data } }) => {
                 data.orders.forEach(order => {
-                    const idx = products.findIndex(product => product.id === order.product_id)
+                    const idx = products.findIndex(
+                        product => product.id === order.product_id
+                    )
                     if (idx > -1) {
                         const newState = [...products]
-                        newState[idx].stock = newState[idx].stock - order.quantity
+                        newState[idx].stock =
+                            newState[idx].stock - order.quantity
                         dispatch(setProduct(newState))
                     }
                 })
@@ -56,9 +59,10 @@ export default ({ navigation }) => {
                 setLoading(false)
                 showModal(false)
                 Toast.show({
-                    text: err.message === 'Network Error'
-                        ? `Network Error: Your connection can't be established.`
-                        : `Can't login, ${err.response.data.message}`,
+                    text:
+                        err.message === 'Network Error'
+                            ? "Network Error: Your connection can't be established."
+                            : `${err.response.data.message}`,
                     type: 'danger',
                     position: 'top'
                 })
@@ -69,35 +73,66 @@ export default ({ navigation }) => {
         <>
             <Header title="Cart" gradientReverse />
             <Content>
-                {
-                    !carts.length ||
-                    <Button block danger iconLeft onPress={() => dispatch(clearCart())}>
+                {!carts.length || (
+                    <Button
+                        block
+                        danger
+                        iconLeft
+                        onPress={() => dispatch(clearCart())}>
                         <Icon type="FontAwesome" name="trash" />
                         <Text>Clear Cart</Text>
                     </Button>
-                }
+                )}
                 <List>
                     {carts.map((item, idx) => (
                         <ListItem avatar key={item.id} style={{ flex: 1 }}>
                             <Left>
-                                <Thumbnail square source={{ uri: `${API_BASEURL}/files/image/product/${item.image}` }} style={{ borderRadius: 10 }} />
+                                <Thumbnail
+                                    square
+                                    source={{
+                                        uri: `${API_BASEURL}/files/image/product/${
+                                            item.image
+                                        }`
+                                    }}
+                                    style={{ borderRadius: 10 }}
+                                />
                             </Left>
                             <Body style={{ flex: 2 }}>
                                 <Text>{item.name}</Text>
                                 <Text note>{rupiah(item.price)}</Text>
                             </Body>
                             <Right style={styles.actionWrapper}>
-                                <TouchableOpacity onPress={() => dispatch(removeCart(item.id))} style={styles.btnQty}>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        dispatch(removeCart(item.id))
+                                    }
+                                    style={styles.btnQty}>
                                     <Icon type="FontAwesome" name="trash" />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => dispatch(decreaseCartQty(idx))} style={styles.btnQty}>
-                                    <Icon type="MaterialIcons" name="remove-circle-outline" />
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        dispatch(decreaseCartQty(idx))
+                                    }
+                                    style={styles.btnQty}>
+                                    <Icon
+                                        type="MaterialIcons"
+                                        name="remove-circle-outline"
+                                    />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ padding: 5 }}>
-                                    <Text style={{ color: '#000' }}>{item.qty}</Text>
+                                    <Text style={{ color: '#000' }}>
+                                        {item.qty}
+                                    </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => dispatch(increaseCartQty(idx))} style={styles.btnQty}>
-                                    <Icon type="MaterialIcons" name="add-circle-outline" />
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        dispatch(increaseCartQty(idx))
+                                    }
+                                    style={styles.btnQty}>
+                                    <Icon
+                                        type="MaterialIcons"
+                                        name="add-circle-outline"
+                                    />
                                 </TouchableOpacity>
                             </Right>
                         </ListItem>
@@ -106,17 +141,27 @@ export default ({ navigation }) => {
             </Content>
             <TouchableOpacity onPress={() => !carts.length || showModal(true)}>
                 <Footer style={styles.checkoutContainer}>
-                    {carts.length > 0
-                        ? <View style={styles.checkout}>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={{ color: '#fff' }}>Checkout Total:</Text>
-                                </View>
-                                <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                    <Text style={styles.fontBold}>{rupiah(carts.reduce((acc, cur) => acc + cur.totalPrice, 0))}</Text>
-                                </View>
+                    {carts.length > 0 ? (
+                        <View style={styles.checkout}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: '#fff' }}>
+                                    Checkout Total:
+                                </Text>
                             </View>
-                        : <Text style={styles.fontBold}>Cart is Empty!</Text>
-                    }
+                            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                <Text style={styles.fontBold}>
+                                    {rupiah(
+                                        carts.reduce(
+                                            (acc, cur) => acc + cur.totalPrice,
+                                            0
+                                        )
+                                    )}
+                                </Text>
+                            </View>
+                        </View>
+                    ) : (
+                        <Text style={styles.fontBold}>Cart is Empty!</Text>
+                    )}
                 </Footer>
             </TouchableOpacity>
             <SimpleModal
@@ -125,17 +170,26 @@ export default ({ navigation }) => {
                 animationIn="zoomIn"
                 animationInTiming={500}
                 animationOut="zoomOut"
-                actions={(
+                actions={
                     <>
-                        <Button  style={{ ...styles.btnModalAction, backgroundColor: '#999' }} onPress={() => showModal(false)}>
+                        <Button
+                            style={{
+                                ...styles.btnModalAction,
+                                backgroundColor: '#999'
+                            }}
+                            onPress={() => showModal(false)}>
                             <Text>Cancel</Text>
                         </Button>
-                        <Button disabled={loading} primary style={{ ...styles.btnModalAction }} onPress={() => checkout(carts)}>
+                        <Button
+                            disabled={loading}
+                            primary
+                            style={{ ...styles.btnModalAction }}
+                            onPress={() => checkout(carts)}>
                             {!loading || <Spinner color="#fff" />}
                             <Text>Checkout</Text>
                         </Button>
                     </>
-                )}
+                }
             />
         </>
     )

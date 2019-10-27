@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import { Header, View, Item, Body, Right, Icon, Title, Text, Input, Left } from 'native-base'
 import Gradient from 'react-native-linear-gradient'
-import { ScrollView } from 'react-native-gesture-handler'
 import CategoryCard from '../Category/CardCategory'
 
 export default props => {

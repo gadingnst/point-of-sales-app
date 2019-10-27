@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, SafeAreaView, StyleSheet } from 'react-native'
-import { Text, View, Picker, List, Content, Spinner } from 'native-base'
+import { Text, View, Picker, List, Content, Spinner, Toast } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { LineChart } from 'react-native-chart-kit'
 import Gradient from 'react-native-linear-gradient'
@@ -42,6 +42,14 @@ export default ({ navigation }) => {
             setLastIncome(statistic.last.reduce((acc, cur) => acc + cur.income, 0))
             setRecentIncome(statistic.recent.reduce((acc, cur) => acc + cur.income, 0))
             setLoading(false)
+        }).catch(err => {
+            Toast.show({
+                text: err.message === 'Network Error'
+                    ? `Network Error: Your connection can't be established.`
+                    : `Can't login, ${err.response.data.message}`,
+                type: 'danger',
+                position: 'top'
+            })
         })
     }
 

@@ -12,9 +12,9 @@ import Color from '../../Assets/Colors'
 export default ({ data, onView, onLoading }) => {
     const dispatch = useDispatch()
     const carts = useSelector(({ cart }) => cart.data)
-    
+
     const isExistsOnCart = data => !!carts.find(({ id }) => id === data.id)
-    
+
     const addToCart = data => {
         dispatch(addCart(data))
     }
@@ -34,37 +34,75 @@ export default ({ data, onView, onLoading }) => {
     return (
         <Col>
             <Card transparent style={styles.card}>
-                {onLoading
-                    ? <Loader width={250} style={{ padding: 8, alignContent: 'center', justifyContent: 'center' }} />
-                    : (
-                        <>
-                            <CardItem>
-                                <Left>
-                                    <Thumbnail square style={{ borderRadius: 5 }} source={{ uri: `${API_BASEURL}/files/image/product/${data.image}` }} />
-                                    <Body>
-                                        <Text>{data.name}</Text>
-                                        <Text note>{data.Category ? data.Category.name : ''}</Text>
-                                    </Body>
-                                </Left>
-                            </CardItem>
-                            <CardItem>
-                                <Left>
-                                    <Button transparent textStyle={{ color: '#87838B' }}>
-                                        <Text>{rupiah(data.price)}</Text>
-                                    </Button>
-                                </Left>
-                                <Right style={styles.actionWrapper}>
-                                    <Button onPress={() => handleCartPress(data)} style={{ ...styles.btnAction, backgroundColor: isExistsOnCart(data) ? Color.Warning : Color.Primary }}>
-                                        <Icon type="MaterialIcons" name={isExistsOnCart(data) ? 'remove-shopping-cart' : 'shopping-cart'} />
-                                    </Button>
-                                    <Button onPress={() => onView ? onView(data) : false} style={styles.btnAction}>
-                                        <Icon name="eye" />
-                                    </Button>
-                                </Right>
-                            </CardItem>
-                        </>
-                    )
-                }
+                {onLoading ? (
+                    <Loader
+                        width={250}
+                        style={{
+                            padding: 8,
+                            alignContent: 'center',
+                            justifyContent: 'center'
+                        }}
+                    />
+                ) : (
+                    <>
+                        <CardItem>
+                            <Left>
+                                <Thumbnail
+                                    square
+                                    style={{ borderRadius: 5 }}
+                                    source={{
+                                        uri: `${API_BASEURL}/files/image/product/${
+                                            data.image
+                                        }`
+                                    }}
+                                />
+                                <Body>
+                                    <Text>{data.name}</Text>
+                                    <Text note>
+                                        {data.Category
+                                            ? data.Category.name
+                                            : ''}
+                                    </Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Button
+                                    transparent
+                                    textStyle={{ color: '#87838B' }}>
+                                    <Text>{rupiah(data.price)}</Text>
+                                </Button>
+                            </Left>
+                            <Right style={styles.actionWrapper}>
+                                <Button
+                                    onPress={() => handleCartPress(data)}
+                                    style={{
+                                        ...styles.btnAction,
+                                        backgroundColor: isExistsOnCart(data)
+                                            ? Color.Warning
+                                            : Color.Primary
+                                    }}>
+                                    <Icon
+                                        type="MaterialIcons"
+                                        name={
+                                            isExistsOnCart(data)
+                                                ? 'remove-shopping-cart'
+                                                : 'shopping-cart'
+                                        }
+                                    />
+                                </Button>
+                                <Button
+                                    onPress={() =>
+                                        onView ? onView(data) : false
+                                    }
+                                    style={styles.btnAction}>
+                                    <Icon name="eye" />
+                                </Button>
+                            </Right>
+                        </CardItem>
+                    </>
+                )}
             </Card>
         </Col>
     )
