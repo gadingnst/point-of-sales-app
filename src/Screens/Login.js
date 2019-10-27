@@ -44,7 +44,7 @@ export default ({ navigation }) => {
                 Toast.show({
                     text:
                         err.message === 'Network Error'
-                            ? `Network Error: Your connection can't be established.`
+                            ? "Network Error: Your connection can't be established."
                             : `Can't login, ${err.response.data.message}`,
                     type: 'danger'
                 })

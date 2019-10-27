@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { View, Toast, Text, Button, List, Content, Icon, Spinner } from 'native-base'
+import {
+    View,
+    Toast,
+    Text,
+    Button,
+    List,
+    Content,
+    Icon,
+    Spinner
+} from 'native-base'
 import { NavigationEvents } from 'react-navigation'
 import Header from '../Components/Base/Header'
 import DataList from '../Components/Manage/DataList'
@@ -111,7 +120,13 @@ export default ({ navigation }) => {
                 <Text>Add Category</Text>
             </Button>
             {loading ? (
-                <View style={{ height: '100%', flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+                <View
+                    style={{
+                        height: '100%',
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignContent: 'center'
+                    }}>
                     <Spinner color={Colors.Primary} size={140} />
                 </View>
             ) : (
