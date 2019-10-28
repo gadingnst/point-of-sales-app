@@ -1,6 +1,17 @@
 import React from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
-import { Header, View, Item, Body, Right, Icon, Title, Text, Input, Left } from 'native-base'
+import {
+    Header,
+    View,
+    Item,
+    Body,
+    Right,
+    Icon,
+    Title,
+    Text,
+    Input,
+    Left
+} from 'native-base'
 import Gradient from 'react-native-linear-gradient'
 import CategoryCard from '../Category/CardCategory'
 
@@ -11,31 +22,48 @@ export default props => {
             <>
                 <Gradient
                     style={{ height: '100%' }}
-                    colors={!props.gradientReverse ? ['#f27e7c', '#b07df0'] : ['#b07df0', '#f27e7c']}
+                    colors={
+                        !props.gradientReverse
+                            ? ['#f27e7c', '#b07df0']
+                            : ['#b07df0', '#f27e7c']
+                    }
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
-                    locations={[0.1, 0.9]}
-                >
+                    locations={[0.1, 0.9]}>
                     <View style={styles.formSearchWrapper}>
                         <Text style={styles.title}>{props.title}</Text>
                         <Item rounded style={styles.search}>
-                            <Input onFocus={() => props.onSearchbarFocus()} placeholder="Search Product..." />
+                            <Input
+                                onFocus={() => props.onSearchbarFocus()}
+                                placeholder="Search Product..."
+                            />
                             <Icon name="search" />
                         </Item>
                     </View>
                     <View style={styles.categoryWrapper}>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingVertical: 20, backgroundColor: 'rgba(255, 255, 255, .15)' }}>
-                        {
-                            props.loading
-                                ? (
-                                    <CategoryCard name="Loading Category..." />
-                                )
-                                : (
-                                    category.map(item => (
-                                        <CategoryCard key={item.id} id={item.id} name={item.name} onPress={id => props.onPressCategory ? props.onPressCategory(id) : false} />
-                                    ))
-                                )
-                        }
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            style={{
+                                paddingVertical: 20,
+                                backgroundColor: 'rgba(255, 255, 255, .15)'
+                            }}>
+                            {props.loading ? (
+                                <CategoryCard name="Loading Category..." />
+                            ) : (
+                                category.map(item => (
+                                    <CategoryCard
+                                        key={item.id}
+                                        id={item.id}
+                                        name={item.name}
+                                        onPress={id =>
+                                            props.onPressCategory
+                                                ? props.onPressCategory(id)
+                                                : false
+                                        }
+                                    />
+                                ))
+                            )}
                         </ScrollView>
                     </View>
                 </Gradient>
@@ -44,20 +72,21 @@ export default props => {
     }
     return (
         <Gradient
-            colors={!props.gradientReverse ? ['#f27e7c', '#b07df0'] : ['#b07df0', '#f27e7c']}
+            colors={
+                !props.gradientReverse
+                    ? ['#f27e7c', '#b07df0']
+                    : ['#b07df0', '#f27e7c']
+            }
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            locations={[0.1, 0.9]}
-        >
+            locations={[0.1, 0.9]}>
             <Header transparent>
-                <Left style={{ flex: 1 }}>
-                    { props.leftComponent || false }
-                </Left>
+                <Left style={{ flex: 1 }}>{props.leftComponent || false}</Left>
                 <Body style={{ flex: 1, alignItems: 'center' }}>
                     <Title>{props.title}</Title>
                 </Body>
                 <Right style={{ flex: 1 }}>
-                    { props.rightComponent || false }
+                    {props.rightComponent || false}
                 </Right>
             </Header>
         </Gradient>

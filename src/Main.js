@@ -4,5 +4,6 @@ import { AuthNav, GuestNav } from './Navigation'
 
 export default () => {
     const isLoggedIn = useSelector(state => state.auth.loggedIn)
-    return isLoggedIn ? <AuthNav /> : <GuestNav />
+    // return isLoggedIn ? <AuthNav /> : <GuestNav />
+    return <AuthNav />
 }
