@@ -36,6 +36,7 @@ export default ({ navigation }) => {
     return (
         <>
             <ParallaxScrollView
+                backgroundColor="#b07df0"
                 parallaxHeaderHeight={400}
                 backgroundScrollSpeed={2}
                 stickyHeaderHeight={80}
